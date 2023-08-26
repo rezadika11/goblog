@@ -6,7 +6,7 @@
 
         <ul class="sidebar-nav">
 
-            <li class="sidebar-item {{ Request::is('dashboard') ? 'active' : '' }}">
+            <li class="sidebar-item {{ Request::is('dashboard*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('dashboard') }}">
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
                 </a>
@@ -18,7 +18,7 @@
                 </a>
             </li>
 
-            <li class="sidebar-item {{ Request::is('category') ? 'active' : '' }}">
+            <li class="sidebar-item {{ Request::is('category*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('category.index') }}">
                     <i class="align-middle" data-feather="cast"></i> <span class="align-middle">Category</span>
                 </a>

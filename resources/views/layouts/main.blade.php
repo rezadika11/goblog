@@ -12,12 +12,15 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="shortcut icon" href="{{ asset('img/icons/icon-48x48.png') }}" />
+    <link rel="stylesheet" class="js-stylesheet" href="{{ asset('css/light.css') }}">
+
+    {{-- fontawesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
     <title>@yield('title') - Ayo Ngeblog</title>
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
@@ -35,6 +38,8 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
+    @stack('js')
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
