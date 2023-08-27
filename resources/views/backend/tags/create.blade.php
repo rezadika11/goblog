@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Edit Category')
+@section('title', 'Create Tags')
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
@@ -12,7 +12,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('category.index') }}">Category</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('tags.index') }}">Tags</a></li>
                             <li class="breadcrumb-item active">@yield('title')</li>
                         </ol>
                     </nav>
@@ -26,17 +26,16 @@
                             <h5 class="card-title">@yield('title')</h5>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('category.update', $data->id) }}" method="POST">
-                                @method('PUT')
+                            <form action="{{ route('tags.store') }}" method="POST">
                                 @csrf
-                                <div class="mb-3 row">
+                                <div class="mb-4 row">
                                     <label class="col-form-label col-sm-2 text-sm-end">Title</label>
                                     <div class="col-sm-8">
                                         <input type="text" name="title"
                                             class="form-control @error('title')
                                             is-invalid
                                         @enderror"
-                                            placeholder="Title" id="title" value="{{ old('title', $data->title) }}">
+                                            placeholder="Title" id="title" value="{{ old('title') }}">
                                         @error('title')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -44,26 +43,10 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="mb-4 row">
-                                    <label class="col-form-label col-sm-2 text-sm-end">Slug</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="slug"
-                                            class="form-control @error('slug')
-                                            is-invalid
-                                        @enderror"
-                                            placeholder="Slug" id="slug" value="{{ old('slug', $data->slug) }}"
-                                            readonly>
-                                    </div>
-                                    @error('slug')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
                                 <div class="mb-3 row">
                                     <div class="col-sm-10 ms-sm-auto">
                                         <button type="submit" class="btn btn-primary">Submit</button>
-                                        <a href="{{ route('category.index') }}" class="btn btn-secondary">Back</a>
+                                        <a href="{{ route('tags.index') }}" class="btn btn-secondary">Back</a>
                                     </div>
                                 </div>
                             </form>
@@ -75,17 +58,3 @@
         </div>
     </main>
 @endsection
-@push('js')
-    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-        crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            $("#title")
-                .keyup(function() {
-                    let slug = $(this).val();
-                    slug = slug.replace(/\s+/g, '-').toLowerCase()
-                    $('#slug').val(slug)
-                })
-        });
-    </script>
-@endpush

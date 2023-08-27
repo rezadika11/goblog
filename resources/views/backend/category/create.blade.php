@@ -35,7 +35,7 @@
                                             class="form-control @error('title')
                                             is-invalid
                                         @enderror"
-                                            placeholder="Title" value="{{ old('title') }}">
+                                            placeholder="Title" id="title" value="{{ old('title') }}">
                                         @error('title')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -50,7 +50,7 @@
                                             class="form-control @error('slug')
                                             is-invalid
                                         @enderror"
-                                            placeholder="Slug" value="{{ old('slug') }}">
+                                            placeholder="Slug" id="slug" value="{{ old('slug') }}" readonly>
                                     </div>
                                     @error('slug')
                                         <div class="invalid-feedback">
@@ -73,3 +73,17 @@
         </div>
     </main>
 @endsection
+@push('js')
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $("#title")
+                .keyup(function() {
+                    let slug = $(this).val();
+                    slug = slug.replace(/\s+/g, '-').toLowerCase()
+                    $('#slug').val(slug)
+                })
+        });
+    </script>
+@endpush

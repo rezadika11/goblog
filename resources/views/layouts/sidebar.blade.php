@@ -24,8 +24,8 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-sign-up.html">
+            <li class="sidebar-item {{ Request::is('tags*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('tags.index') }}">
                     <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Tag</span>
                 </a>
             </li>
