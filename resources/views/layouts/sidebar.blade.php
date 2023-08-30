@@ -12,8 +12,8 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-profile.html">
+            <li class="sidebar-item {{ Request::is('posts*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('posts.index') }}">
                     <i class="align-middle" data-feather="file"></i> <span class="align-middle">Post</span>
                 </a>
             </li>

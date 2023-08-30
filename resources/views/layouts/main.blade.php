@@ -22,6 +22,9 @@
     <title>@yield('title') - Ayo Ngeblog</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    @stack('css')
+
 </head>
 
 <body>
@@ -38,6 +41,7 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
+
     @stack('js')
 
 

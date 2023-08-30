@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
@@ -32,5 +33,6 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/category', CategoryController::class)->middleware('auth');
 Route::resource('/tags', TagsController::class)->middleware('auth');
+Route::resource('/posts', PostsController::class)->middleware('auth');
 
 require __DIR__ . '/auth.php';

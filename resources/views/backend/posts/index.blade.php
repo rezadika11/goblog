@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Tags')
+@section('title', 'Posts')
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
@@ -23,34 +23,46 @@
                     @include('sweetalert::alert')
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('tags.create') }}" class="btn btn-primary"><i
+                            <a href="{{ route('posts.create') }}" class="btn btn-primary"><i
                                     class="fa-solid fa-square-plus"></i> Add
-                                Tags</a>
+                                Posts</a>
                         </div>
                         <div class="card-body">
                             <table id="datatables-reponsive" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Title</th>
-                                        <th>Action</th>
+                                        <th width="50">No</th>
+                                        <th width="300">Title</th>
+                                        <th width="700">Excerpt</th>
+                                        <th>Author</th>
+                                        <th>Status</th>
+                                        <th width="100">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $tag)
+                                    @foreach ($posts as $post)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $tag->title }}</td>
+                                            <td>{{ $post->title }}</td>
+                                            <td>{{ $post->excerpt }}</td>
+                                            <td>{{ $post->user->name }}</td>
                                             <td>
-                                                <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-success"><i
-                                                        class="fa-solid fa-pen-to-square"></i>
-                                                    Edit</a>
-                                                <button type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#modalTags{{ $tag->id }}" class="btn btn-danger"><i
-                                                        class="fa-solid fa-trash-can"></i>
-                                                    Delete</button>
+                                                @if ($post->status == 'publish')
+                                                    <span class="badge bg-success">{{ $post->status }}</span>
+                                                @else
+                                                    <span class="badge bg-warning">{{ $post->status }}</span>
+                                                @endif
                                             </td>
-                                            @include('backend.modal.delete-tags')
+                                            <td>
+                                                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-success"><i
+                                                        class="fa-solid fa-pen-to-square"></i>
+                                                </a>
+                                                <button type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#modalCategory{{ $post->id }}"
+                                                    class="btn btn-danger"><i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </td>
+                                            {{-- @include('backend.modal.delete-category') --}}
                                         </tr>
                                     @endforeach
 
