@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Alert;
+use Psy\Command\WhereamiCommand;
 
 class PostsController extends Controller
 {
@@ -71,8 +72,6 @@ class PostsController extends Controller
             }
             Storage::putFileAs('\image', $request->file('image'), $namaok);
 
-
-
             $posts = Post::insertGetId([
                 'title' => $request->title,
                 'slug' => Str::slug($request->title),
@@ -119,9 +118,18 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $post = Post::with(['tag', 'category', 'user'])
+            ->where('slug', $slug)
+            ->first();
+
+        $categories = $post->category->pluck('id')->toArray();
+        $tagMulti = $post->tag->pluck('id')->toArray();
+        $category = Category::all();
+        $tags = Tag::all();
+
+        return view('backend.posts.edit', compact('post', 'category', 'tags', 'categories', 'tagMulti'));
     }
 
     /**

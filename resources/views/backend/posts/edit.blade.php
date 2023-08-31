@@ -32,7 +32,8 @@
                             <h5 class="card-title">@yield('title')</h5>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('posts.update', $post->slug) }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3 row">
                                     <label for="title" class="col-sm-2 col-form-label">Title</label>
@@ -41,7 +42,7 @@
                                             class="form-control @error('title')
                                             is-invalid
                                         @enderror"
-                                            value="{{ old('title') }}">
+                                            value="{{ old('title', $post->title) }}">
                                         @error('title')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -71,7 +72,7 @@
                                         <textarea name="body" id="body"
                                             class="form-control @error('body')
                                             is-invalid
-                                        @enderror">{{ old('body') }}</textarea>
+                                        @enderror">{{ old('body', $post->body) }}</textarea>
                                         @error('body')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -86,7 +87,7 @@
                                         <textarea name="excerpt" rows="4"
                                             class="form-control @error('excerpt')
                                             is-invalid
-                                        @enderror">{{ old('excerpt') }}</textarea>
+                                        @enderror">{{ old('excerpt', $post->excerpt) }}</textarea>
                                         @error('excerpt')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -98,7 +99,7 @@
                                 <div class="mb-3 row">
                                     <label for="meta_description" class="col-sm-2 col-form-label">Meta Description</label>
                                     <div class="col-sm-10">
-                                        <textarea name="meta_description" rows="4" class="form-control">{{ old('meta_description') }}</textarea>
+                                        <textarea name="meta_description" rows="4" class="form-control">{{ old('meta_description', $post->meta_description) }}</textarea>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -109,10 +110,9 @@
                                             is-invalid
                                         @enderror"
                                             name="category[]" multiple="multiple">
-                                            {{-- <option disabled selected>Pilih Category</option> --}}
                                             @foreach ($category as $cat)
                                                 <option value="{{ $cat->id }}"
-                                                    {{ old('category') == $cat->id ? 'selected' : '' }}>
+                                                    {{ old('category', $cat->id, $categories) ? 'selected' : '' }}>
                                                     {{ $cat->title }}
                                                 </option>
                                             @endforeach
@@ -134,7 +134,7 @@
                                             name="tag[]" multiple="multiple">
                                             @foreach ($tags as $tag)
                                                 <option value="{{ $tag->id }}"
-                                                    {{ old('tag') == $tag->id ? 'selected' : '' }}>
+                                                    {{ old('tag', $tag->id, $tagMulti) ? 'selected' : '' }}>
                                                     {{ $tag->title }}
                                                 </option>
                                             @endforeach
@@ -152,12 +152,14 @@
                                     <div class="col-sm-10">
                                         <div class="form-check">
                                             <input type="radio" class="form-check-input" id="validationFormCheck2"
-                                                name="status" value="publish">
+                                                name="status" value="publish"
+                                                {{ $post->status == 'publish' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="validationFormCheck2">Publish</label>
                                         </div>
                                         <div class="form-check mb-3">
                                             <input type="radio" class="form-check-input" id="validationFormCheck3"
-                                                name="status" value="private">
+                                                name="status" value="private"
+                                                {{ $post->status == 'private' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="validationFormCheck3">Private</label>
                                         </div>
                                         @error('status')

@@ -1,5 +1,12 @@
 @extends('layouts.main')
 @section('title', 'Posts')
+@push('css')
+    <style>
+        table.dataTable tbody td {
+            vertical-align: top;
+        }
+    </style>
+@endpush
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
@@ -54,7 +61,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-success"><i
+                                                <a href="{{ route('posts.edit', $post->slug) }}" class="btn btn-success"><i
                                                         class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                 <button type="button" data-bs-toggle="modal"
