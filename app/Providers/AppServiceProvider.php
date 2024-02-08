@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Toastr::useVite();
     }
 }

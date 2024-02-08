@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Alert;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -16,10 +17,24 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function data()
+    {
+        $data = Category::orderBy('title', 'asc')->get();
+
+        return datatables()
+            ->of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                return '<a href="' . route('category.edit', $data->id) . '" class="btn btn-sm btn-success"><i class="fa fa-edit"></i></a>
+                <button onclick="modalHapus(`' . route('category.destroy', $data->id) . '`)"  class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+                ';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
     public function index()
     {
-        $data = Category::latest()->get();
-        return view('backend.category.index', compact('data'));
+        return view('backend.category.index');
     }
 
     /**
@@ -53,12 +68,12 @@ class CategoryController extends Controller
             $category->save();
 
             DB::commit();
-            Alert::success('Success', 'Successfully added new category');
+            Toastr::success('Successfully added new category', 'Success');
             return redirect(route('category.index'));
         } catch (\Exception $e) {
             DB::rollBack();
             report($e);
-            Alert::error('Failed', 'Failed added new category!!!');
+            Toastr::error('Failed added new category', 'Error');
             return back()->withInput();
         }
     }
@@ -109,12 +124,12 @@ class CategoryController extends Controller
                     'slug' => $request->slug
                 ]);
             DB::commit();
-            Alert::success('Success', 'Successfully edit category');
+            Toastr::success('Successfully updated category', 'Success');
             return redirect(route('category.index'));
         } catch (\Exception $e) {
             DB::rollBack();
             report($e);
-            Alert::error('Failed', 'Failed edit category!!!');
+            Toastr::error('Failed updated category', 'Error');
             return back()->withInput();
         }
     }
@@ -129,14 +144,16 @@ class CategoryController extends Controller
     {
         DB::beginTransaction();
         try {
-            Category::where('id', $id)->delete();
+            $data = Category::where('id', $id)->delete();
             DB::commit();
-            Alert::success('Success', 'Successfully delete category');
-            return redirect(route('category.index'));
+            Toastr::success('Successfully deleted category', 'Success');
+            if (!$data) {
+                return response()->json(['error' => 'Data not found'], 404);
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             report($e);
-            Alert::error('Failed', 'Failed delete category!!!');
+            Toastr::error('Failed deleted category', 'Error');
             return back()->withInput();
         }
     }

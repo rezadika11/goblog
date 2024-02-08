@@ -20,7 +20,6 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    @include('sweetalert::alert')
                     <div class="card">
                         <div class="card-header">
                             <h5 class="card-title">@yield('title')</h5>
@@ -60,8 +59,10 @@
                                 </div>
                                 <div class="mb-3 row">
                                     <div class="col-sm-10 ms-sm-auto">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <a href="{{ route('category.index') }}" class="btn btn-secondary">Back</a>
+                                        <button type="submit" class="btn btn-primary"> <i class="fas fa-save"></i>
+                                            Save</button>
+                                        <a href="{{ route('category.index') }}" class="btn btn-secondary">Back <i
+                                                class="fas fa-arrow-right"></i></a>
                                     </div>
                                 </div>
                             </form>

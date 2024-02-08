@@ -29,10 +29,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/category/data', [CategoryController::class, 'data'])->name('category.data');
+    Route::resource('/category', CategoryController::class);
+    Route::resource('/tags', TagsController::class);
+    Route::resource('/posts', PostsController::class);
 });
 
-Route::resource('/category', CategoryController::class)->middleware('auth');
-Route::resource('/tags', TagsController::class)->middleware('auth');
-Route::resource('/posts', PostsController::class)->middleware('auth');
+
 
 require __DIR__ . '/auth.php';
